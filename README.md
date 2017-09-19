@@ -3,8 +3,10 @@
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.4.2.
 
 ## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+if ng command is not found do:
+`alias ng="~/workspace/mean-rsvp/node_modules/@angular/cli/bin/ng"`
+Run ` ng serve --host $IP --port $PORT --disable-host-check` for a dev server. Navigate to `http://localhost:8080/`. The app will automatically reload if you change any of the source files.
+run  `NODE_ENV=dev nodemon server` to start node api 
 
 ## Code scaffolding
 
