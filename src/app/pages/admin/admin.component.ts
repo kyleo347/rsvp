@@ -1,21 +1,21 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs/subscription';
 
+import { AuthService } from './../../auth/auth.service';
 import { ApiService } from './../../core/api.service';
 import { UtilsService } from './../../core/utils.service';
 import { FilterSortService } from './../../core/filter-sort.service';
 import { EventModel } from './../../core/models/event.model';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  selector: 'app-admin',
+  templateUrl: './admin.component.html',
+  styleUrls: ['./admin.component.scss']
 })
-export class HomeComponent implements OnInit, OnDestroy {
-
-  pageTitle = 'Events';
-  eventListSub: Subscription;
+export class AdminComponent implements OnInit {
+  pageTitle = 'Admin';
+  eventsSub: Subscription;
   eventList: EventModel[];
   filteredEvents: EventModel[];
   loading: boolean;
@@ -24,24 +24,28 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   constructor(
     private title: Title,
-    public utils: UtilsService,
+    public auth: AuthService,
     private api: ApiService,
-    public fs: FilterSortService) { }
+    public utils: UtilsService,
+    public fs: FilterSortService
+  ) { }
 
   ngOnInit() {
-    this.title.setTitle(this.pageTitle);
+    this.title.setTitle('this.pageTitle');
     this._getEventList();
   }
 
   private _getEventList() {
     this.loading = true;
-    this.eventListSub = this.api
-      .getEvents$()
-      .subscribe(res => {
+    // get all admin events
+    this.eventsSub = this.api
+      .getAdminEvents$()
+      .subscribe( res => {
         this.eventList = res;
         this.filteredEvents = res;
         this.loading = false;
-      }, err => {
+      },
+      err => {
         console.error(err);
         this.loading = false;
         this.error = true;
@@ -49,7 +53,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   searchEvents() {
-    this.filteredEvents = this.fs.search(this.eventList, this.query, '_id', 'mediumDate');
+    this.fs.search(this.eventList, this.query, '_id', 'mediumDate');
   }
 
   resetQuery() {
@@ -58,7 +62,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.eventListSub.unsubscribe();
+    this.eventsSub.unsubscribe();
   }
-
 }

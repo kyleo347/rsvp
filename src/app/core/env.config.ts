@@ -1,4 +1,4 @@
-const _isDev = window.location.port.indexOf('8080') > -1;
+const _isDev = window.location.port.indexOf('4200') > -1;
 const getHost = () => {
     const protocol = window.location.protocol;
     const host = window.location.host;
