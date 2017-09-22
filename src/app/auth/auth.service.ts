@@ -77,6 +77,8 @@ export class AuthService {
             } else if (err) {
                 console.error(`Error authenticating: ${err.error}`);
             }
+            this._redirect();
+            this._clearRedirect();
         });
     }
 
@@ -101,6 +103,19 @@ export class AuthService {
         return roles.indexOf('admin') > -1;
     }
 
+    private _redirect() {
+        // redirect with or without tab parameter
+        const fullRedirect = decodeURI(localStorage.getItem('authRedirect'));
+        const redirectArr = fullRedirect.split('?tab=');
+        const navArr = [redirectArr[0] || '/'];
+        const tabObj = redirectArr[1] ? { queryParams: { tab: redirectArr[1] } } : null;
+
+        if (!tabObj) {
+            this.router.navigate(navArr);
+        } else {
+            this.router.navigate(navArr, tabObj);
+        }
+    }
     private _clearRedirect() {
         // remove redirect from local storage
         localStorage.removeItem('authRedirect');

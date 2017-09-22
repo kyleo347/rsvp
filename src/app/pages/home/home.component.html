@@ -30,12 +30,12 @@
       <!-- Events listing -->
       <section class="list-group">
         <a
-          *ngFor="let event of fs.orderByDate(filteredEvents, 'startDatetime')"
+          *ngFor="let event of fs.orderByDate(filteredEvents, 'startDateTime')"
           [routerLink]="['/event', event._id]"
           class="list-group-item list-group-item-action flex-column align-items-start">
           <div class="d-flex w-100 justify-content-between">
             <h5 class="mb-1" [innerHTML]="event.title"></h5>
-            <small>{{utils.eventDates(event.startDatetime, event.endDatetime)}}</small>
+            <small>{{utils.eventDates(event.startDateTime, event.endDateTime)}}</small>
           </div>
         </a>
       </section>
