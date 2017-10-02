@@ -65,4 +65,21 @@ export class FilterSortService {
     return sortedArray;
   }
 
+  filter(array: any[], property: string, value: any) {
+    // return only items with a specific key/value pair
+    if (!property || value === undefined || !this._objArrayCheck(array)) {
+      return array;
+    }
+    const filteredArray = array.filter(item => {
+      for (const key in item) {
+        if (item.hasOwnProperty(key)){
+          if (key === property && item[key] === value) {
+            return true;
+          }
+        }
+      }
+    });
+    return filteredArray;
+  }
+
 }

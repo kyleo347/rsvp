@@ -43,4 +43,21 @@ export class UtilsService {
   tabIs(currentTab: string, tab: string): boolean {
     return currentTab === tab;
   }
+
+  displayCount(guests: number): string {
+    // attending this event
+    const persons = guests === 1 ? ' person' : ' people';
+    return guests + persons;
+  }
+
+  showPlusOnes(guests: number): string {
+    // if bringing additional guests, show as +n
+    if (guests) {
+      return `+${guests}`;
+    }
+  }
+
+  booleanToText(bool: boolean): string {
+    return bool ? 'Yes' : 'No';
+  }
 }
